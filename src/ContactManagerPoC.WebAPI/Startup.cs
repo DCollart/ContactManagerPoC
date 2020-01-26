@@ -44,7 +44,7 @@ namespace ContactManagerPoC.WebAPI
 
             app.UseAuthorization();
 
-            app.UseHealthChecks("/healthcheck");
+            app.UseHealthChecks("/healthchecks");
 
             app.UseEndpoints(endpoints =>
             {
