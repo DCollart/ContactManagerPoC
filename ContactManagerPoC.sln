@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5C3A2AED-A879-4ECF-B029-1F1E88E4053B}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -21,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactManagerPoC.Applicati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactManagerPoC.WebAPI", "src\ContactManagerPoC.WebAPI\ContactManagerPoC.WebAPI.csproj", "{F9025451-D759-41F0-8DA8-59592E42FFEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManagerPoC.WebAPI.Tests", "tests\ContactManagerPoC.WebAPI.Tests\ContactManagerPoC.WebAPI.Tests.csproj", "{CDF91DCC-870F-4B84-B41C-8EC4E921ED75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactManagerPoC.WebAPI.Tests", "tests\ContactManagerPoC.WebAPI.Tests\ContactManagerPoC.WebAPI.Tests.csproj", "{CDF91DCC-870F-4B84-B41C-8EC4E921ED75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
