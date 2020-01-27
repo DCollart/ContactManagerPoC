@@ -10,7 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\ContactManagerPoC.Application\ContactManagerPoC.Application.csproj" />
+    <ProjectReference Include="..\ContactManagerPoC.Domain\ContactManagerPoC.Domain.csproj" />
+    <ProjectReference Include="..\ContactManagerPoC.Infrastructure\ContactManagerPoC.Infrastructure.csproj" />
   </ItemGroup>
 
 

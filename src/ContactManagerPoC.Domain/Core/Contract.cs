@@ -12,7 +12,7 @@ namespace ContactManagerPoC.Domain.Core
             if (!contract.Compile()())
             {
                 throw new InvalidOperationException(contract.ToString());
-            }
+            }      
         }
     }
 }
