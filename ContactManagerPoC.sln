@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactManagerPoC.WebAPI", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactManagerPoC.WebAPI.Tests", "tests\ContactManagerPoC.WebAPI.Tests\ContactManagerPoC.WebAPI.Tests.csproj", "{CDF91DCC-870F-4B84-B41C-8EC4E921ED75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.PoC.Domain.Tests", "tests\ContactManager.PoC.Domain.Tests\ContactManager.PoC.Domain.Tests.csproj", "{5327C916-35E0-4353-9F26-6A21D91089C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{CDF91DCC-870F-4B84-B41C-8EC4E921ED75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDF91DCC-870F-4B84-B41C-8EC4E921ED75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDF91DCC-870F-4B84-B41C-8EC4E921ED75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5327C916-35E0-4353-9F26-6A21D91089C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5327C916-35E0-4353-9F26-6A21D91089C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5327C916-35E0-4353-9F26-6A21D91089C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5327C916-35E0-4353-9F26-6A21D91089C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{36A22C8D-9001-4F1D-B389-41AA6B7B41E3} = {E0D7F045-A137-4DD7-83BE-BDB5C64D8350}
 		{F9025451-D759-41F0-8DA8-59592E42FFEA} = {E0D7F045-A137-4DD7-83BE-BDB5C64D8350}
 		{CDF91DCC-870F-4B84-B41C-8EC4E921ED75} = {22E3047D-ACFC-4B8A-BFBD-428530F054BE}
+		{5327C916-35E0-4353-9F26-6A21D91089C4} = {22E3047D-ACFC-4B8A-BFBD-428530F054BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF435FAE-62A2-444A-9F94-BB25FF77DB3A}
