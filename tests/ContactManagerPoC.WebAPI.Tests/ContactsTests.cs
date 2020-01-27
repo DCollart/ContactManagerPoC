@@ -46,5 +46,25 @@ namespace ContactManagerPoC.WebAPI.Tests
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
         }
+
+        [Fact]
+        public async Task CanGetContactById()
+        {
+            // Act
+            var response = await _client.GetAsync("/contacts/1");
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async Task CantGetContactByIdWithUnexistingId()
+        {
+            // Act
+            var response = await _client.GetAsync("/contacts/0");
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
     }
 }

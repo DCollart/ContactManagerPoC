@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ContactManagerPoC.Domain.Contact
 {
-    public class Contact : Core.IDeleted
+    public class Contact : IDeleted
     {
         public int Id { get; private set; }
         public string FirstName { get; set; }

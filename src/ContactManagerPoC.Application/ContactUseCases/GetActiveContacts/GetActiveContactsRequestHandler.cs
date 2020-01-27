@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ContactManagerPoC.Application.ContactUseCases.GetActiveContacts
 {
-    public class GetActiveContactsRequestHandler : IRequestHandler<GetActiveContactsRequest, ActiveContactResponse[]>
+    public class GetActiveContactsRequestHandler : IRequestHandler<GetActiveContactsRequest, GetActiveContactResponse[]>
     {
         private readonly IContactRepository _contactRepository;
 
@@ -21,7 +21,7 @@ namespace ContactManagerPoC.Application.ContactUseCases.GetActiveContacts
             _contactRepository = contactRepository;
         }
 
-        public async Task<ActiveContactResponse[]> Handle(GetActiveContactsRequest request, CancellationToken cancellationToken)
+        public async Task<GetActiveContactResponse[]> Handle(GetActiveContactsRequest request, CancellationToken cancellationToken)
         {
             return await _contactRepository.GetAllActiveContactsAsync();
         }

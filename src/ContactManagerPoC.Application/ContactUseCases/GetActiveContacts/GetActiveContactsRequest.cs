@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ContactManagerPoC.Application.ContactUseCases.GetActiveContacts
 {
-    public class GetActiveContactsRequest : IRequest<ActiveContactResponse[]>
+    public class GetActiveContactsRequest : IRequest<GetActiveContactResponse[]>
     {
     }
 }

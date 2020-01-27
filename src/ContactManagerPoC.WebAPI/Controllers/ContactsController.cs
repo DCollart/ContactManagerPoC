@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application.ContactUseCases.AddContact;
 using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
+using ContactManagerPoC.Application.ContactUseCases.GetContactById;
 using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Domain.Core;
 using MediatR;
@@ -29,6 +30,17 @@ namespace ContactManagerPoC.WebAPI.Controllers
         public async Task<IActionResult> GetAllContacts()
         {
             return Ok(await _mediator.Send(new GetActiveContactsRequest()));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetContactById(int id)
+        {
+            var response = await _mediator.Send(new GetContactByIdRequest() { Id = id });
+            if (response == null) 
+            {
+                return NotFound();
+            }
+            return Ok(response);
         }
 
         [HttpPost]
