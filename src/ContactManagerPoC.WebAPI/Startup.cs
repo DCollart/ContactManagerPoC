@@ -4,8 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application;
+using ContactManagerPoC.Application.ContactUseCases.AddContact;
 using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Infrastructure;
+using ContactManagerPoC.WebAPI.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,12 +36,13 @@ namespace ContactManagerPoC.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation();
             services.AddHealthChecks();
             services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(IUnitOfWork).Assembly);
             services.AddDbContext<ContactContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Contacts"]));
             services.AddScoped<IUnitOfWork>(p => p.GetService<ContactContext>());
             services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddSingleton<IValidator<AddContactRequest>, AddContactRequestValidator>();
 
         }
 
