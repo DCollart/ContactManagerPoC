@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using ContactManagerPoC.Application;
 using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Infrastructure;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,8 +34,9 @@ namespace ContactManagerPoC.WebAPI
         {
             services.AddControllers();
             services.AddHealthChecks();
-
+            services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(IUnitOfWork).Assembly);
             services.AddDbContext<ContactContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Contacts"]));
+            services.AddScoped<IUnitOfWork>(p => p.GetService<ContactContext>());
             services.AddScoped<IContactRepository, ContactRepository>();
 
         }
@@ -45,7 +49,7 @@ namespace ContactManagerPoC.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

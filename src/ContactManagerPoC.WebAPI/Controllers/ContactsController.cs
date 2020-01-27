@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ContactManagerPoC.Application.ContactUseCases.AddContact;
+using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
 using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Domain.Core;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,20 +16,34 @@ namespace ContactManagerPoC.WebAPI.Controllers
     [ApiController]
     public class ContactsController : ControllerBase
     {
-        private readonly IContactRepository _contactRepository;
+        private readonly IMediator _mediator;
 
-        public ContactsController(IContactRepository contactRepository)
+        public ContactsController(IMediator mediator)
         {
-            Contract.Require(() => contactRepository != null);
+            Contract.Require(() => mediator != null);
 
-            _contactRepository = contactRepository;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public IActionResult GetAllContacts()
+        public async Task<IActionResult> GetAllContacts()
         {
-            return Ok(_contactRepository.GetAllActiveContacts());
+            return Ok(await _mediator.Send(new GetActiveContactsRequest()));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddContact(AddContactRequest addContactRequest)
+        {
+            var result = await _mediator.Send(addContactRequest);
+
+            if (result.IsFailure)
+            {
+                result.Errors.ForEach(e => ModelState.AddModelError(string.Empty, e));
+                return BadRequest(ModelState);
+            }
+
+            return Created("temp", result.Item);
+           
+         }
     }
 }

@@ -1,9 +1,12 @@
-﻿using ContactManagerPoC.Application.ContactUsesCases;
+﻿using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
+using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Domain.Contact;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ContactManagerPoC.Infrastructure
 {
@@ -16,9 +19,19 @@ namespace ContactManagerPoC.Infrastructure
             _context = context;
         }
 
-        public IReadOnlyList<Contact> GetAllActiveContacts()
+        public void AddContact(Contact contact)
         {
-            return _context.Contacts.Where(c => !c.IsDeleted).ToList().AsReadOnly();
+            _context.Contacts.Add(contact);
+        }
+
+        public async Task<ActiveContactResponse[]> GetAllActiveContactsAsync()
+        {
+            return await _context.Contacts.Where(c => !c.IsDeleted).Select(c => new ActiveContactResponse()
+            {
+                Id = c.Id,
+                FirstName = c.FirstName,
+                LastName = c.LastName
+            }).ToArrayAsync();
         }
     }
 }
