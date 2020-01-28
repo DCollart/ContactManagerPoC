@@ -7,6 +7,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application.ContactUseCases.AddContact;
 using ContactManagerPoC.Application.ContactUseCases.DeleteContactContact;
+using ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress;
+using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
 using FluentAssertions;
 using Xunit;
 
@@ -27,6 +29,7 @@ namespace ContactManagerPoC.WebAPI.Tests
             var id = await AddContact();
             await GetContact(id);
             await UpdateContactNames(id);
+            await UpdateContactAddress(id);
             await DeleteContact(id);
         }
 
@@ -65,7 +68,7 @@ namespace ContactManagerPoC.WebAPI.Tests
         private async Task UpdateContactNames(int id)
         {
             // Arrange 
-            var content = new StringContent(JsonSerializer.Serialize(new AddContactRequest()
+            var content = new StringContent(JsonSerializer.Serialize(new UpdateContactNamesRequest()
             {
                 FirstName = Guid.NewGuid().ToString(),
                 LastName = Guid.NewGuid().ToString()
@@ -73,6 +76,25 @@ namespace ContactManagerPoC.WebAPI.Tests
 
             // Act
             var response = await _client.PutAsync($"/contacts/{id}/names", content);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        private async Task UpdateContactAddress(int id)
+        {
+            // Arrange 
+            var content = new StringContent(JsonSerializer.Serialize(new UpdateContactAddressRequest()
+            {
+                Street = Guid.NewGuid().ToString(),
+                City = Guid.NewGuid().ToString(),
+                Number = Guid.NewGuid().ToString(),
+                ZipCode = Guid.NewGuid().ToString(),
+                Country = Guid.NewGuid().ToString()
+            }), Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _client.PutAsync($"/contacts/{id}/address", content);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);

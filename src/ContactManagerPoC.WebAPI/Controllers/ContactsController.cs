@@ -6,6 +6,7 @@ using ContactManagerPoC.Application.ContactUseCases.AddContact;
 using ContactManagerPoC.Application.ContactUseCases.DeleteContactContact;
 using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
 using ContactManagerPoC.Application.ContactUseCases.GetContactById;
+using ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress;
 using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
 using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Domain.Core;
@@ -47,11 +48,26 @@ namespace ContactManagerPoC.WebAPI.Controllers
         }
 
         [HttpPut("{id}/names")]
-        public async Task<IActionResult> UpdateContact(int id, UpdateContactNamesRequest updateContactRequest)
+        public async Task<IActionResult> UpdateContactNames(int id, UpdateContactNamesRequest updateContactRequest)
         {
             updateContactRequest.Id = id;
             var result = await _mediator.Send(updateContactRequest);
             
+            if (result.IsFailure)
+            {
+                result.Errors.ForEach(e => ModelState.AddModelError(string.Empty, e));
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
+        }
+
+        [HttpPut("{id}/address")]
+        public async Task<IActionResult> ChangeContactAddress(int id, UpdateContactAddressRequest updateContactAddressRequest)
+        {
+            updateContactAddressRequest.Id = id;
+            var result = await _mediator.Send(updateContactAddressRequest);
+
             if (result.IsFailure)
             {
                 result.Errors.ForEach(e => ModelState.AddModelError(string.Empty, e));

@@ -8,9 +8,9 @@ using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
 
 namespace ContactManagerPoC.WebAPI.Validators
 {
-    public class UpdateContactRequestValidator : AbstractValidator<UpdateContactNamesRequest>
+    public class UpdateContactNamesRequestValidator : AbstractValidator<UpdateContactNamesRequest>
     {
-        public UpdateContactRequestValidator()
+        public UpdateContactNamesRequestValidator()
         {
             RuleFor(c => c.FirstName).NotEmpty();
             RuleFor(c => c.LastName).NotEmpty();

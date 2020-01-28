@@ -24,7 +24,6 @@ namespace ContactManagerPoC.Domain.Contact
             LastName = lastName;
             Address = address;
             IsDeleted = false;
-
         }
 
         public static Contact Create(Name firstName, Name lastName, Address address)
@@ -51,6 +50,13 @@ namespace ContactManagerPoC.Domain.Contact
 
             FirstName = firstName;
             LastName = lastName;
+        }
+
+        public void ChangeAddress(Address address)
+        {
+            Contract.Require(() => address != null);
+
+            Address = address;
         }
     }
 }

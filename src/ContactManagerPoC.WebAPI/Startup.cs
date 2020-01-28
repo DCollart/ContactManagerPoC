@@ -7,6 +7,8 @@ using ContactManagerPoC.Application;
 using ContactManagerPoC.Application.ContactUseCases.AddContact;
 using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
 using ContactManagerPoC.Application.ContactUseCases.GetContactById;
+using ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress;
+using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
 using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Infrastructure;
 using ContactManagerPoC.WebAPI.Validators;
@@ -49,6 +51,9 @@ namespace ContactManagerPoC.WebAPI
             services.AddScoped<IContactRepository, ContactRepository>();
 
             services.AddSingleton<IValidator<AddContactRequest>, AddContactRequestValidator>();
+            services.AddSingleton<IValidator<UpdateContactNamesRequest>, UpdateContactNamesRequestValidator>();
+            services.AddSingleton<IValidator<UpdateContactAddressRequest>, UpdateContactAddressRequestValidator>();
+
 
         }
 
