@@ -25,6 +25,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ContactManagerPoC.WebAPI
 {
@@ -40,7 +42,10 @@ namespace ContactManagerPoC.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddFluentValidation();
+            services.AddControllers().AddFluentValidation(o =>
+                {
+                    o.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+                });
             services.AddHealthChecks();
             services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(IUnitOfWork).Assembly);
             services.AddDbContext<ContactContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Contacts"]));
@@ -50,11 +55,10 @@ namespace ContactManagerPoC.WebAPI
             services.AddScoped<IGetActiveContactsRepository, ContactRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
 
-            services.AddSingleton<IValidator<AddContactRequest>, AddContactRequestValidator>();
-            services.AddSingleton<IValidator<UpdateContactNamesRequest>, UpdateContactNamesRequestValidator>();
-            services.AddSingleton<IValidator<UpdateContactAddressRequest>, UpdateContactAddressRequestValidator>();
-
-
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ContactManagerAPI", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +70,12 @@ namespace ContactManagerPoC.WebAPI
             }
 
             //app.UseHttpsRedirection();
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContactManagerAPI");
+            });
 
             app.UseRouting();
 

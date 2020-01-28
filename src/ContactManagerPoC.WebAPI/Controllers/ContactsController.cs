@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application.ContactUseCases.AddContact;
 using ContactManagerPoC.Application.ContactUseCases.DeleteContactContact;
@@ -31,12 +32,14 @@ namespace ContactManagerPoC.WebAPI.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(GetActiveContactResponse[]), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllContacts()
         {
             return Ok(await _mediator.Send(new GetActiveContactsRequest()));
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(GetContactByIdResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetContactById(int id)
         {
             var response = await _mediator.Send(new GetContactByIdRequest() { Id = id });

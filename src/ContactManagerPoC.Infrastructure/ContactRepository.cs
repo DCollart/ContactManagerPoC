@@ -47,6 +47,11 @@ namespace ContactManagerPoC.Infrastructure
                 Id = c.Id,
                 FirstName = c.FirstName.Value,
                 LastName = c.LastName.Value,
+                Street = c.Address.Street,
+                Number =  c.Address.Number,
+                City = c.Address.City,
+                ZipCode = c.Address.ZipCode,
+                Country = c.Address.Country,
                 IsDeleted = c.IsDeleted
             }).FirstOrDefaultAsync(c => c.Id == id);
         }
