@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application;
 using ContactManagerPoC.Application.ContactUseCases.AddContact;
+using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
+using ContactManagerPoC.Application.ContactUseCases.GetContactById;
 using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Infrastructure;
 using ContactManagerPoC.WebAPI.Validators;
@@ -42,6 +44,10 @@ namespace ContactManagerPoC.WebAPI
             services.AddDbContext<ContactContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Contacts"]));
             services.AddScoped<IUnitOfWork>(p => p.GetService<ContactContext>());
             services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IGetContactByIdRepository, ContactRepository>();
+            services.AddScoped<IGetActiveContactsRepository, ContactRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
+
             services.AddSingleton<IValidator<AddContactRequest>, AddContactRequestValidator>();
 
         }

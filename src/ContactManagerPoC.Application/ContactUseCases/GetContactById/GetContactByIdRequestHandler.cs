@@ -11,9 +11,9 @@ namespace ContactManagerPoC.Application.ContactUseCases.GetContactById
 {
     public class GetContactByIdRequestHandler : IRequestHandler<GetContactByIdRequest, GetContactByIdResponse>
     {
-        private readonly IContactRepository _contactRepository;
+        private readonly IGetContactByIdRepository _contactRepository;
 
-        public GetContactByIdRequestHandler(IContactRepository contactRepository)
+        public GetContactByIdRequestHandler(IGetContactByIdRepository contactRepository)
         {
             Contract.Require(() => contactRepository != null);
 

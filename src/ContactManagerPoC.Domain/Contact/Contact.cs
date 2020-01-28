@@ -20,12 +20,14 @@ namespace ContactManagerPoC.Domain.Contact
             IsDeleted = false;
         }
 
+        private static bool IsValidName(string name) => !string.IsNullOrEmpty(name);
+
         public static Result<string, Contact> Create(string firstName, string lastName)
         {
             List<string> errors = new List<string>();
 
-            if (string.IsNullOrEmpty(firstName)) errors.Add("Firstname should not be null or empty");
-            if (string.IsNullOrEmpty(lastName)) errors.Add("Lastname should not be null or empty");
+            if (!IsValidName(firstName)) errors.Add("Firstname should not be null or empty");
+            if (!IsValidName(lastName)) errors.Add("Lastname should not be null or empty");
 
             if (errors.Any()) return Result<string, Contact>.Fail(errors);
 
@@ -41,6 +43,20 @@ namespace ContactManagerPoC.Domain.Contact
         {
             Contract.Require(() => CanDelete());
             IsDeleted = true;
+        }
+
+        public Result<string> CanUpdate(string firstName, string lastName)
+        {
+            var result = Contact.Create(firstName, lastName);
+            return result.IsSuccess ? Result<string>.Success() : Result<string>.Fail(result.Errors);
+        }
+
+        public void Update(string firstName, string lastName)
+        {
+            Contract.Require(() => CanUpdate(firstName, lastName).IsSuccess);
+
+            FirstName = firstName;
+            LastName = lastName;
         }
     }
 }

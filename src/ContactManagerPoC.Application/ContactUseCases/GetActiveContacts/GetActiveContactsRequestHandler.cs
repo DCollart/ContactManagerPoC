@@ -12,9 +12,9 @@ namespace ContactManagerPoC.Application.ContactUseCases.GetActiveContacts
 {
     public class GetActiveContactsRequestHandler : IRequestHandler<GetActiveContactsRequest, GetActiveContactResponse[]>
     {
-        private readonly IContactRepository _contactRepository;
+        private readonly IGetActiveContactsRepository _contactRepository;
 
-        public GetActiveContactsRequestHandler(IContactRepository contactRepository)
+        public GetActiveContactsRequestHandler(IGetActiveContactsRepository contactRepository)
         {
             Contract.Require(() => contactRepository != null);
 

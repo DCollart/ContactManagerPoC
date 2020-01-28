@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ContactManagerPoC.Infrastructure
 {
-    public class ContactRepository : IContactRepository
+    public class ContactRepository : IContactRepository, IGetActiveContactsRepository, IGetContactByIdRepository
     {
         private readonly ContactContext _context;
 
@@ -25,7 +25,12 @@ namespace ContactManagerPoC.Infrastructure
             _context.Contacts.Add(contact);
         }
 
-        public async Task<GetActiveContactResponse[]> GetAllActiveContactsAsync()
+        public async Task<Contact> GetContactByIdAsync(int id)
+        {
+            return await _context.Contacts.FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        async Task<GetActiveContactResponse[]> IGetActiveContactsRepository.GetAllActiveContactsAsync()
         {
             return await _context.Contacts.Where(c => !c.IsDeleted).Select(c => new GetActiveContactResponse()
             {
@@ -35,7 +40,7 @@ namespace ContactManagerPoC.Infrastructure
             }).ToArrayAsync();
         }
 
-        public async Task<GetContactByIdResponse> GetContactByIdAsync(int id)
+        async Task<GetContactByIdResponse> IGetContactByIdRepository.GetContactByIdAsync(int id)
         {
             return await _context.Contacts.Select(c => new GetContactByIdResponse() 
             { 
