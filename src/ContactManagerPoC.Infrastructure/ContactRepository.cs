@@ -46,7 +46,8 @@ namespace ContactManagerPoC.Infrastructure
             { 
                 Id = c.Id,
                 FirstName = c.FirstName,
-                LastName = c.LastName
+                LastName = c.LastName,
+                IsDeleted = c.IsDeleted
             }).FirstOrDefaultAsync(c => c.Id == id);
         }
     }
