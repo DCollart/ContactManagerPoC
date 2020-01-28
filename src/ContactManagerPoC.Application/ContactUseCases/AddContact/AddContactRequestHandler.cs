@@ -29,27 +29,24 @@ namespace ContactManagerPoC.Application.ContactUseCases.AddContact
         {
             var firstNameResult = Name.Create(request.FirstName);
             var lastNameResult = Name.Create(request.LastName);
+            var addressResult = Address.Create(request.Street, request.Number, request.City, request.ZipCode, request.Country);
 
-            if (firstNameResult.IsFailure || lastNameResult.IsFailure)
+            if (firstNameResult.IsFailure || lastNameResult.IsFailure || addressResult.IsFailure)
             {
                 var errors = new List<string>();
                 errors.AddRange(firstNameResult.Errors);
                 errors.AddRange(lastNameResult.Errors);
+                errors.AddRange(addressResult.Errors);
+
 
                 return Result<string, int>.Fail(errors);
             }
 
-            var contactResult = Contact.Create(firstNameResult.Item, lastNameResult.Item);
-
-            if (contactResult.IsFailure) 
-            {
-                return Result<string, int>.Fail(contactResult.Errors);
-            }
-
-            _contactRepository.AddContact(contactResult.Item);
+            var contact = Contact.Create(firstNameResult.Item, lastNameResult.Item, addressResult.Item);
+            _contactRepository.AddContact(contact);
             await _unitOfWork.SaveChangesAsync();
 
-            return Result<string, int>.Success(contactResult.Item.Id);
+            return Result<string, int>.Success(contact.Id);
         }
     }
 }

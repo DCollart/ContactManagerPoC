@@ -1,22 +1,19 @@
-﻿using ContactManagerPoC.Domain.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Domain;
-using ContactManagerPoC.Domain.Contact;
+using ContactManagerPoC.Domain.Core;
 using MediatR;
 
-namespace ContactManagerPoC.Application.ContactUseCases.UpdateContact
+namespace ContactManagerPoC.Application.ContactUseCases.UpdateContactNames
 {
-    public class UpdateContactRequestHandler : IRequestHandler<UpdateContactRequest, Result<string>>
+    public class UpdateContactNamesRequestHandler : IRequestHandler<UpdateContactNamesRequest, Result<string>>
     {
         private readonly IContactRepository _contactRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateContactRequestHandler(IContactRepository contactRepository, IUnitOfWork unitOfWork)
+        public UpdateContactNamesRequestHandler(IContactRepository contactRepository, IUnitOfWork unitOfWork)
         {
             Contract.Require(() => contactRepository != null);
             Contract.Require(() => unitOfWork != null);
@@ -25,7 +22,7 @@ namespace ContactManagerPoC.Application.ContactUseCases.UpdateContact
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<string>> Handle(UpdateContactRequest request, CancellationToken cancellationToken)
+        public async Task<Result<string>> Handle(UpdateContactNamesRequest request, CancellationToken cancellationToken)
         {
             var contact = await _contactRepository.GetContactByIdAsync(request.Id);
             if (contact == null)
@@ -45,17 +42,11 @@ namespace ContactManagerPoC.Application.ContactUseCases.UpdateContact
                 return Result<string, int>.Fail(errors);
             }
 
-            var contactResult = Contact.Create(firstNameResult.Item, lastNameResult.Item);
-
-            if (contactResult.IsFailure)
-            {
-                return Result<string, int>.Fail(contactResult.Errors);
-            }
 
             contact.UpdateNames(firstNameResult.Item, lastNameResult.Item);
             await _unitOfWork.SaveChangesAsync();
 
-            return Result<string, int>.Success(contactResult.Item.Id);
+            return Result<string>.Success();
         }
     }
 }

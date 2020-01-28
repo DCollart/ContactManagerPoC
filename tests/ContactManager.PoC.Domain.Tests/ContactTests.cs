@@ -10,11 +10,18 @@ namespace ContactManager.PoC.Domain.Tests
 {
     public class ContactTests
     {
+        private readonly Address _address;
+
+        public ContactTests()
+        {
+            _address = Address.Create("Street", "Number", "City", "ZipCode", "Country").Item;
+        }
+
         [Fact]
         public void NewContactShouldNotBeDeletedAndCouldBeDeleted()
         {
             // Act
-            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item).Item;
+            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item, _address);
 
             // Assert
             contact.IsDeleted.Should().BeFalse();
@@ -25,7 +32,7 @@ namespace ContactManager.PoC.Domain.Tests
         public void ContactShouldBeDeleted()
         {
             // Arrange
-            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item).Item;
+            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item, _address);
 
             // Act
             contact.Delete();
@@ -39,7 +46,7 @@ namespace ContactManager.PoC.Domain.Tests
         public void DeletedContactCouldNotBeDeleted()
         {
             // Arrange
-            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item).Item;
+            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item, _address);
 
             // Act
             contact.Delete();
@@ -52,7 +59,7 @@ namespace ContactManager.PoC.Domain.Tests
         public void DeleteAnAlreadyDeletedContactShouldFailed()
         {
             // Arrange
-            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item).Item;
+            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item, _address);
             contact.Delete();
 
             // Act

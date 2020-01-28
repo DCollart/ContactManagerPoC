@@ -37,7 +37,12 @@ namespace ContactManagerPoC.WebAPI.Tests
             var content = new StringContent(JsonSerializer.Serialize(new AddContactRequest()
             {
                 FirstName = Guid.NewGuid().ToString(),
-                LastName = Guid.NewGuid().ToString()
+                LastName = Guid.NewGuid().ToString(),
+                Street = Guid.NewGuid().ToString(),
+                City = Guid.NewGuid().ToString(),
+                Number = Guid.NewGuid().ToString(),
+                ZipCode = Guid.NewGuid().ToString(),
+                Country = Guid.NewGuid().ToString()
             }), Encoding.UTF8, "application/json");
 
             // Act

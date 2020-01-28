@@ -18,6 +18,18 @@ namespace ContactManagerPoC.Infrastructure.Configurations
             builder.OwnsOne(c => c.LastName)
                 .Property(x => x.Value)
                 .HasColumnName("LastName");
+
+            builder.OwnsOne(c => c.Address, b =>
+            {
+                b.Property(a => a.Street).HasColumnName("Street");
+                b.Property(a => a.Number).HasColumnName("Number");
+                b.Property(a => a.City).HasColumnName("City");
+                b.Property(a => a.Country).HasColumnName("Country");
+                b.Property(a => a.ZipCode).HasColumnName("ZipCode");
+
+            });
+
+
         }
     }
 }

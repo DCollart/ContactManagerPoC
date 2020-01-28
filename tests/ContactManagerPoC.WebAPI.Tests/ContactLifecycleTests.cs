@@ -26,7 +26,7 @@ namespace ContactManagerPoC.WebAPI.Tests
         {
             var id = await AddContact();
             await GetContact(id);
-            await UpdateContact(id);
+            await UpdateContactNames(id);
             await DeleteContact(id);
         }
 
@@ -36,7 +36,12 @@ namespace ContactManagerPoC.WebAPI.Tests
             var content = new StringContent(JsonSerializer.Serialize(new AddContactRequest()
             {
                 FirstName = Guid.NewGuid().ToString(),
-                LastName = Guid.NewGuid().ToString()
+                LastName = Guid.NewGuid().ToString(),
+                Street =  Guid.NewGuid().ToString(),
+                City = Guid.NewGuid().ToString(),
+                Number = Guid.NewGuid().ToString(),
+                ZipCode = Guid.NewGuid().ToString(),
+                Country = Guid.NewGuid().ToString()
             }), Encoding.UTF8, "application/json");
 
             // Act
@@ -57,7 +62,7 @@ namespace ContactManagerPoC.WebAPI.Tests
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        private async Task UpdateContact(int id)
+        private async Task UpdateContactNames(int id)
         {
             // Arrange 
             var content = new StringContent(JsonSerializer.Serialize(new AddContactRequest()
@@ -67,7 +72,7 @@ namespace ContactManagerPoC.WebAPI.Tests
             }), Encoding.UTF8, "application/json");
 
             // Act
-            var response = await _client.PutAsync($"/contacts/{id}", content);
+            var response = await _client.PutAsync($"/contacts/{id}/names", content);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);

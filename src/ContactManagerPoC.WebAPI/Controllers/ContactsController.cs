@@ -6,7 +6,7 @@ using ContactManagerPoC.Application.ContactUseCases.AddContact;
 using ContactManagerPoC.Application.ContactUseCases.DeleteContactContact;
 using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
 using ContactManagerPoC.Application.ContactUseCases.GetContactById;
-using ContactManagerPoC.Application.ContactUseCases.UpdateContact;
+using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
 using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Domain.Core;
 using ContactManagerPoC.WebAPI.Validators;
@@ -46,8 +46,8 @@ namespace ContactManagerPoC.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateContact(int id, UpdateContactRequest updateContactRequest)
+        [HttpPut("{id}/names")]
+        public async Task<IActionResult> UpdateContact(int id, UpdateContactNamesRequest updateContactRequest)
         {
             updateContactRequest.Id = id;
             var result = await _mediator.Send(updateContactRequest);

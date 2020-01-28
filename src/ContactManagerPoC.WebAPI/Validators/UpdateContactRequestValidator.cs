@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ContactManagerPoC.Application.ContactUseCases.UpdateContact;
+using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
 
 namespace ContactManagerPoC.WebAPI.Validators
 {
-    public class UpdateContactRequestValidator : AbstractValidator<UpdateContactRequest>
+    public class UpdateContactRequestValidator : AbstractValidator<UpdateContactNamesRequest>
     {
         public UpdateContactRequestValidator()
         {

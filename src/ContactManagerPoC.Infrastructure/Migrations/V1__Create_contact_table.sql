@@ -1,4 +1,5 @@
 ﻿CREATE TABLE Contacts 
+CREATE TABLE Contacts 
 (
 	Id integer identity(1,1) primary key,
 	FirstName varchar(255) not null,

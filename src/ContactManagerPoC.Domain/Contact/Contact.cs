@@ -12,28 +12,26 @@ namespace ContactManagerPoC.Domain.Contact
         public Name FirstName { get; private set; }
         public Name LastName { get; private set; }
         public bool IsDeleted { get; private set; }
+        public Address Address { get; private set; }
 
         private Contact()
         {
         }
 
-        private Contact(Name firstName, Name lastName)
+        private Contact(Name firstName, Name lastName, Address address)
         {
             FirstName = firstName;
             LastName = lastName;
+            Address = address;
             IsDeleted = false;
+
         }
 
-        public static Result<string, Contact> Create(Name firstName, Name lastName)
+        public static Contact Create(Name firstName, Name lastName, Address address)
         {
-            List<string> errors = new List<string>();
+            Contract.Require(() => firstName != null && lastName != null && address != null);
 
-            if (firstName == null) errors.Add("Firstname should not be null");
-            if (lastName == null) errors.Add("Lastname should not be null");
-
-            if (errors.Any()) return Result<string, Contact>.Fail(errors);
-
-            return Result<string, Contact>.Success(new Contact(firstName, lastName));
+            return new Contact(firstName, lastName, address);
         }
 
         public bool CanDelete()
@@ -47,15 +45,9 @@ namespace ContactManagerPoC.Domain.Contact
             IsDeleted = true;
         }
 
-        public Result<string> CanUpdateNames(Name firstName, Name lastName)
-        {
-            var result = Contact.Create(firstName, lastName);
-            return result.IsSuccess ? Result<string>.Success() : Result<string>.Fail(result.Errors);
-        }
-
         public void UpdateNames(Name firstName, Name lastName)
         {
-            Contract.Require(() => CanUpdateNames(firstName, lastName).IsSuccess);
+            Contract.Require(() => firstName != null && lastName != null);
 
             FirstName = firstName;
             LastName = lastName;
