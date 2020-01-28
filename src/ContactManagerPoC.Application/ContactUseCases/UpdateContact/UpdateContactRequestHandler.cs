@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application.ContactUsesCases;
+using ContactManagerPoC.Domain;
 using ContactManagerPoC.Domain.Contact;
 using MediatR;
 
@@ -32,17 +33,29 @@ namespace ContactManagerPoC.Application.ContactUseCases.UpdateContact
                 return Result<string>.Fail("The contact does not exist");
             }
 
-            var result = contact.CanUpdate(request.FirstName, request.LastName);
+            var firstNameResult = Name.Create(request.FirstName);
+            var lastNameResult = Name.Create(request.LastName);
 
-            if (result.IsFailure)
+            if (firstNameResult.IsFailure || lastNameResult.IsFailure)
             {
-                return Result<string>.Fail(result.Errors);
+                var errors = new List<string>();
+                errors.AddRange(firstNameResult.Errors);
+                errors.AddRange(lastNameResult.Errors);
+
+                return Result<string, int>.Fail(errors);
             }
 
-            contact.Update(request.FirstName, request.LastName);
+            var contactResult = Contact.Create(firstNameResult.Item, lastNameResult.Item);
+
+            if (contactResult.IsFailure)
+            {
+                return Result<string, int>.Fail(contactResult.Errors);
+            }
+
+            contact.UpdateNames(firstNameResult.Item, lastNameResult.Item);
             await _unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Success();
+            return Result<string, int>.Success(contactResult.Item.Id);
         }
     }
 }

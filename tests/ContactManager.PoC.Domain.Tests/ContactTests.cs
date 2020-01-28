@@ -3,6 +3,7 @@ using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContactManagerPoC.Domain;
 using Xunit;
 
 namespace ContactManager.PoC.Domain.Tests
@@ -13,7 +14,7 @@ namespace ContactManager.PoC.Domain.Tests
         public void NewContactShouldNotBeDeletedAndCouldBeDeleted()
         {
             // Act
-            var contact = Contact.Create("Isaac", "Asimov").Item;
+            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item).Item;
 
             // Assert
             contact.IsDeleted.Should().BeFalse();
@@ -24,7 +25,7 @@ namespace ContactManager.PoC.Domain.Tests
         public void ContactShouldBeDeleted()
         {
             // Arrange
-            var contact = Contact.Create("Isaac", "Asimov").Item;
+            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item).Item;
 
             // Act
             contact.Delete();
@@ -38,7 +39,7 @@ namespace ContactManager.PoC.Domain.Tests
         public void DeletedContactCouldNotBeDeleted()
         {
             // Arrange
-            var contact = Contact.Create("Isaac", "Asimov").Item;
+            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item).Item;
 
             // Act
             contact.Delete();
@@ -51,7 +52,7 @@ namespace ContactManager.PoC.Domain.Tests
         public void DeleteAnAlreadyDeletedContactShouldFailed()
         {
             // Arrange
-            var contact = Contact.Create("Isaac", "Asimov").Item;
+            var contact = Contact.Create(Name.Create("Isaac").Item, Name.Create("Asimov").Item).Item;
             contact.Delete();
 
             // Act

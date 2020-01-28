@@ -9,25 +9,27 @@ namespace ContactManagerPoC.Domain.Contact
     public class Contact : IDeleted
     {
         public int Id { get; private set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public Name FirstName { get; private set; }
+        public Name LastName { get; private set; }
         public bool IsDeleted { get; private set; }
 
-        private Contact(string firstName, string lastName)
+        private Contact()
+        {
+        }
+
+        private Contact(Name firstName, Name lastName)
         {
             FirstName = firstName;
             LastName = lastName;
             IsDeleted = false;
         }
 
-        private static bool IsValidName(string name) => !string.IsNullOrEmpty(name);
-
-        public static Result<string, Contact> Create(string firstName, string lastName)
+        public static Result<string, Contact> Create(Name firstName, Name lastName)
         {
             List<string> errors = new List<string>();
 
-            if (!IsValidName(firstName)) errors.Add("Firstname should not be null or empty");
-            if (!IsValidName(lastName)) errors.Add("Lastname should not be null or empty");
+            if (firstName == null) errors.Add("Firstname should not be null");
+            if (lastName == null) errors.Add("Lastname should not be null");
 
             if (errors.Any()) return Result<string, Contact>.Fail(errors);
 
@@ -45,15 +47,15 @@ namespace ContactManagerPoC.Domain.Contact
             IsDeleted = true;
         }
 
-        public Result<string> CanUpdate(string firstName, string lastName)
+        public Result<string> CanUpdateNames(Name firstName, Name lastName)
         {
             var result = Contact.Create(firstName, lastName);
             return result.IsSuccess ? Result<string>.Success() : Result<string>.Fail(result.Errors);
         }
 
-        public void Update(string firstName, string lastName)
+        public void UpdateNames(Name firstName, Name lastName)
         {
-            Contract.Require(() => CanUpdate(firstName, lastName).IsSuccess);
+            Contract.Require(() => CanUpdateNames(firstName, lastName).IsSuccess);
 
             FirstName = firstName;
             LastName = lastName;

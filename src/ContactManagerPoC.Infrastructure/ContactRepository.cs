@@ -35,8 +35,8 @@ namespace ContactManagerPoC.Infrastructure
             return await _context.Contacts.Where(c => !c.IsDeleted).Select(c => new GetActiveContactResponse()
             {
                 Id = c.Id,
-                FirstName = c.FirstName,
-                LastName = c.LastName
+                FirstName = c.FirstName.Value,
+                LastName = c.LastName.Value
             }).ToArrayAsync();
         }
 
@@ -45,8 +45,8 @@ namespace ContactManagerPoC.Infrastructure
             return await _context.Contacts.Select(c => new GetContactByIdResponse() 
             { 
                 Id = c.Id,
-                FirstName = c.FirstName,
-                LastName = c.LastName,
+                FirstName = c.FirstName.Value,
+                LastName = c.LastName.Value,
                 IsDeleted = c.IsDeleted
             }).FirstOrDefaultAsync(c => c.Id == id);
         }

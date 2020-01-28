@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ContactManagerPoC.Domain;
 
 namespace ContactManagerPoC.Application.ContactUseCases.AddContact
 {
@@ -26,17 +27,29 @@ namespace ContactManagerPoC.Application.ContactUseCases.AddContact
 
         public async Task<Result<string, int>> Handle(AddContactRequest request, CancellationToken cancellationToken)
         {
-            var result = Contact.Create(request.FirstName, request.LastName);
+            var firstNameResult = Name.Create(request.FirstName);
+            var lastNameResult = Name.Create(request.LastName);
 
-            if (result.IsFailure)
+            if (firstNameResult.IsFailure || lastNameResult.IsFailure)
             {
-                return Result<string, int>.Fail(result.Errors);
+                var errors = new List<string>();
+                errors.AddRange(firstNameResult.Errors);
+                errors.AddRange(lastNameResult.Errors);
+
+                return Result<string, int>.Fail(errors);
             }
 
-            _contactRepository.AddContact(result.Item);
+            var contactResult = Contact.Create(firstNameResult.Item, lastNameResult.Item);
+
+            if (contactResult.IsFailure) 
+            {
+                return Result<string, int>.Fail(contactResult.Errors);
+            }
+
+            _contactRepository.AddContact(contactResult.Item);
             await _unitOfWork.SaveChangesAsync();
 
-            return Result<string, int>.Success(result.Item.Id);
+            return Result<string, int>.Success(contactResult.Item.Id);
         }
     }
 }
