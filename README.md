@@ -1,7 +1,8 @@
 [![Build Status](https://dev.azure.com/Mithril-Belgium/PoC/_apis/build/status/DCollart.ContactManagerPoC?branchName=master)](https://dev.azure.com/Mithril-Belgium/PoC/_build/latest?definitionId=4&branchName=master)
-
+[![Build Status](https://dev.azure.com/Mithril-Belgium/PoC/_apis/build/status/DCollart.ContactManagerPoC?branchName=master)](https://dev.azure.com/Mithril-Belgium/PoC/_build/latest?definitionId=4&branchName=master)
 # ContactManagerPoC
 This project is a proof of concept to show how I would structured and develop a web API.
+The patterns/archichecture are obviously overkilled for that kind of CRUD application. 
 
 ## Git
 This repository will use the [conventional commit notation](https://www.conventionalcommits.org/en/v1.0.0/).
