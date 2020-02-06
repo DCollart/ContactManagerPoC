@@ -5,24 +5,24 @@ using System.Text;
 
 namespace ContactManagerPoC.Domain.Core
 {
-    public class Result<TError>
+    public class Result
     {
-        public List<TError> Errors { get; }
+        public List<Error> Errors { get; }
 
         protected Result()
         {
-            Errors = new List<TError>();
+            Errors = new List<Error>();
         }
 
-        protected Result(TError error)
+        protected Result(Error error)
         {
-            Errors = new List<TError>()
+            Errors = new List<Error>()
             {
                 error
             };
         }
 
-        protected Result(IEnumerable<TError> errors)
+        protected Result(IEnumerable<Error> errors)
         {
             Errors = errors.ToList();
         }
@@ -31,14 +31,14 @@ namespace ContactManagerPoC.Domain.Core
 
         public bool IsFailure => !IsSuccess;
 
-        public static Result<TError> Success() => new Result<TError>();
+        public static Result Success() => new Result();
 
-        public static Result<TError> Fail(TError error) => new Result<TError>(error);
+        public static Result Fail(Error error) => new Result(error);
 
-        public static Result<TError> Fail(IEnumerable<TError> errors) => new Result<TError>(errors);
+        public static Result Fail(IEnumerable<Error> errors) => new Result(errors);
     }
 
-    public class Result<TError, TResult> : Result<TError>
+    public class Result<TResult> : Result
     {
         public TResult Item { get; }
 
@@ -47,16 +47,16 @@ namespace ContactManagerPoC.Domain.Core
             Item = result;
         }
 
-        protected Result(TError error) : base(error)
+        protected Result(Error error) : base(error)
         {
         }
 
-        protected Result(IEnumerable<TError> errors) : base(errors)
+        protected Result(IEnumerable<Error> errors) : base(errors)
         {       
         }
 
-        public static Result<TError, TResult> Success(TResult result) => new Result<TError, TResult>(result);
+        public static Result<TResult> Success(TResult result) => new Result<TResult>(result);
 
-        public static Result<TError, TResult> Fail(IEnumerable<TError> errors) => new Result<TError, TResult>(errors);
+        public static Result<TResult> Fail(IEnumerable<Error> errors) => new Result<TResult>(errors);
     }
 }

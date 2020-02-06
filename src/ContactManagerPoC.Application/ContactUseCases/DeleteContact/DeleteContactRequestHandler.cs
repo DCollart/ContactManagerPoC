@@ -11,7 +11,7 @@ using MediatR;
 
 namespace ContactManagerPoC.Application.ContactUseCases.DeleteContact
 {
-    public class DeleteContactRequestHandler : IRequestHandler<DeleteContactRequest, Result<string>>
+    public class DeleteContactRequestHandler : IRequestHandler<DeleteContactRequest, Result>
     {
         private readonly IContactRepository _contactRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -25,24 +25,24 @@ namespace ContactManagerPoC.Application.ContactUseCases.DeleteContact
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<string>> Handle(DeleteContactRequest request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeleteContactRequest request, CancellationToken cancellationToken)
         {
             var contact = await _contactRepository.GetContactByIdAsync(request.Id);
 
             if (contact == null)
             {
-                return Result<string>.Fail("The contact does not exist");
+                return Result.Fail(Error.Create(ErrorMessages.AggregateNotFound, errorType: ErrorType.AggregateNotFound));
             }
-
+             
             if (!contact.CanDelete())
             {
-                return Result<string>.Fail("The contact cannot be deleted");
+                return Result.Fail(Error.Create(ErrorMessages.InvalidOperation));
             }
 
             contact.Delete();
             await _unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Success();
+            return Result.Success();
         }
     }
 }

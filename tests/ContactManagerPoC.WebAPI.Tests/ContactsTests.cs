@@ -63,6 +63,17 @@ namespace ContactManagerPoC.WebAPI.Tests
         }
 
         [Fact]
+        public async Task CannotDeleteContactWithUnExistingId()
+        {
+            // Act
+            var response = await _client.DeleteAsync("/contacts/-1");
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+
+        [Fact]
         public async Task CantGetContactByIdWithUnexistingId()
         {
             // Act

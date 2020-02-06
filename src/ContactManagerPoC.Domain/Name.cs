@@ -16,15 +16,15 @@ namespace ContactManagerPoC.Domain
             Value = value;
         }
 
-        public static Result<string, Name> Create(string name)
+        public static Result<Name> Create(string name)
         {
-            List<string> errors = new List<string>();
+            List<Error> errors = new List<Error>();
 
-            if (string.IsNullOrEmpty(name)) errors.Add("Firstname should not be null or empty");
+            if (string.IsNullOrEmpty(name)) errors.Add(Error.Create(ErrorMessages.ShouldNotBeNullOrEmpty, nameof(name)));
 
-            if (errors.Any()) return Result<string, Name>.Fail(errors);
+            if (errors.Any()) return Result<Name>.Fail(errors);
 
-            return Result<string, Name>.Success(new Name(name));
+            return Result<Name>.Success(new Name(name));
         }
 
 

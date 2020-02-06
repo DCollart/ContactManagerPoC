@@ -11,7 +11,7 @@ using ContactManagerPoC.Domain;
 
 namespace ContactManagerPoC.Application.ContactUseCases.AddContact
 {
-    public class AddContactRequestHandler : IRequestHandler<AddContactRequest, Result<string, int>>
+    public class AddContactRequestHandler : IRequestHandler<AddContactRequest, Result<int>>
     {
         private readonly IContactRepository _contactRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -25,7 +25,7 @@ namespace ContactManagerPoC.Application.ContactUseCases.AddContact
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<string, int>> Handle(AddContactRequest request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(AddContactRequest request, CancellationToken cancellationToken)
         {
             var firstNameResult = Name.Create(request.FirstName);
             var lastNameResult = Name.Create(request.LastName);
@@ -33,20 +33,20 @@ namespace ContactManagerPoC.Application.ContactUseCases.AddContact
 
             if (firstNameResult.IsFailure || lastNameResult.IsFailure || addressResult.IsFailure)
             {
-                var errors = new List<string>();
+                var errors = new List<Error>();
                 errors.AddRange(firstNameResult.Errors);
                 errors.AddRange(lastNameResult.Errors);
                 errors.AddRange(addressResult.Errors);
 
 
-                return Result<string, int>.Fail(errors);
+                return Result<int>.Fail(errors);
             }
 
             var contact = Contact.Create(firstNameResult.Item, lastNameResult.Item, addressResult.Item);
             _contactRepository.AddContact(contact);
             await _unitOfWork.SaveChangesAsync();
 
-            return Result<string, int>.Success(contact.Id);
+            return Result<int>.Success(contact.Id);
         }
     }
 }

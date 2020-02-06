@@ -9,12 +9,10 @@ namespace ContactManagerPoC.WebAPI.Tests
 {
     public class HealthchecksTests : IClassFixture<WebApiFixture>
     {
-        private readonly WebApiFixture _fixture;
         private readonly HttpClient _client;
 
         public HealthchecksTests(WebApiFixture fixture)
         {
-            _fixture = fixture;
             _client = fixture.CreateClient();
         }
 

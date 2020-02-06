@@ -8,7 +8,7 @@ using MediatR;
 
 namespace ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress
 {
-    public class UpdateContactAddressRequestHandler : IRequestHandler<UpdateContactAddressRequest, Result<string>>
+    public class UpdateContactAddressRequestHandler : IRequestHandler<UpdateContactAddressRequest, Result>
     {
         private readonly IContactRepository _contactRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -22,28 +22,28 @@ namespace ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<string>> Handle(UpdateContactAddressRequest request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateContactAddressRequest request, CancellationToken cancellationToken)
         {
             var contact = await _contactRepository.GetContactByIdAsync(request.Id);
             if (contact == null)
             {
-                return Result<string>.Fail("The contact does not exist");
+                return Result.Fail(Error.Create(ErrorMessages.AggregateNotFound, errorType: ErrorType.AggregateNotFound));
             }
 
             var addressResult = Address.Create(request.Street, request.Number, request.City, request.ZipCode, request.Country);
 
             if (addressResult.IsFailure)
             {
-                var errors = new List<string>();
+                var errors = new List<Error>();
                 errors.AddRange(addressResult.Errors);
 
-                return Result<string, int>.Fail(errors);
+                return Result.Fail(errors);
             }
 
             contact.ChangeAddress(addressResult.Item);
             await _unitOfWork.SaveChangesAsync();
 
-            return Result<string>.Success();
+            return Result.Success();
         }
     }
 }

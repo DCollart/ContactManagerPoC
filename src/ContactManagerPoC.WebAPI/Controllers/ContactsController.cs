@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application.ContactUseCases.AddContact;
 using ContactManagerPoC.Application.ContactUseCases.DeleteContactContact;
@@ -11,6 +12,7 @@ using ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress;
 using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
 using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Domain.Core;
+using ContactManagerPoC.WebAPI.Core;
 using ContactManagerPoC.WebAPI.Validators;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -55,14 +57,10 @@ namespace ContactManagerPoC.WebAPI.Controllers
         {
             updateContactRequest.Id = id;
             var result = await _mediator.Send(updateContactRequest);
-            
-            if (result.IsFailure)
-            {
-                result.Errors.ForEach(e => ModelState.AddModelError(string.Empty, e));
-                return BadRequest(ModelState);
-            }
 
-            return Ok();
+            var potentialBadResult = GeneratePotentialBadResult(result);
+
+            return potentialBadResult ?? Ok();
         }
 
         [HttpPut("{id}/address")]
@@ -71,13 +69,9 @@ namespace ContactManagerPoC.WebAPI.Controllers
             updateContactAddressRequest.Id = id;
             var result = await _mediator.Send(updateContactAddressRequest);
 
-            if (result.IsFailure)
-            {
-                result.Errors.ForEach(e => ModelState.AddModelError(string.Empty, e));
-                return BadRequest(ModelState);
-            }
+            var potentialBadResult = GeneratePotentialBadResult(result);
 
-            return Ok();
+            return potentialBadResult ?? Ok();
         }
 
         [HttpPost]
@@ -85,13 +79,9 @@ namespace ContactManagerPoC.WebAPI.Controllers
         {
             var result = await _mediator.Send(addContactRequest);
 
-            if (result.IsFailure)
-            {
-                result.Errors.ForEach(e => ModelState.AddModelError(string.Empty, e));
-                return BadRequest(ModelState);
-            }
+            var potentialBadResult = GeneratePotentialBadResult(result);
 
-            return Created("temp", result.Item);
+            return potentialBadResult ?? Created("temp", result.Item);
         }
 
 
@@ -100,13 +90,29 @@ namespace ContactManagerPoC.WebAPI.Controllers
         {
             var result = await _mediator.Send(new DeleteContactRequest() { Id = id });
 
+            var potentialBadResult = GeneratePotentialBadResult(result);
+
+            return potentialBadResult ?? Ok();
+        }
+
+        private ActionResult GeneratePotentialBadResult(Result result)
+        {
             if (result.IsFailure)
             {
-                result.Errors.ForEach(e => ModelState.AddModelError(string.Empty, e));
+                ModelState.UpdateFromResult(result);
+            }
+
+            if (result.Errors.Any(e => e.ErrorType == ErrorType.AggregateNotFound))
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
-            return Ok();
+            return null;
         }
     }
 }

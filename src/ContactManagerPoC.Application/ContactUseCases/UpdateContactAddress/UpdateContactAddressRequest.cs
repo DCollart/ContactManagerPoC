@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress
 {
-    public class UpdateContactAddressRequest : IRequest<Result<string>>
+    public class UpdateContactAddressRequest : IRequest<Result>
     {
         public int Id { get; set; }
         public string Street { get; set; }

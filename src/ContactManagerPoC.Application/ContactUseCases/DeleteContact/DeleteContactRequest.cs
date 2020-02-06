@@ -6,7 +6,7 @@ using MediatR;
 
 namespace ContactManagerPoC.Application.ContactUseCases.DeleteContactContact
 {
-    public class DeleteContactRequest : IRequest<Result<string>>
+    public class DeleteContactRequest : IRequest<Result>
     {
         public int Id { get; set; }
 

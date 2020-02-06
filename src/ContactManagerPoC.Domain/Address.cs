@@ -23,19 +23,19 @@ namespace ContactManagerPoC.Domain
             Country = country;
         }
 
-        public static Result<string, Address> Create(string street, string number, string city, string zipCode, string country)
+        public static Result<Address> Create(string street, string number, string city, string zipCode, string country)
         {
-            List<string> errors = new List<string>();
+            List<Error> errors = new List<Error>();
 
-            if (string.IsNullOrEmpty(street)) errors.Add("Street should not be null or empty");
-            if (string.IsNullOrEmpty(number)) errors.Add("Number should not be null or empty");
-            if (string.IsNullOrEmpty(city)) errors.Add("City should not be null or empty");
-            if (string.IsNullOrEmpty(zipCode)) errors.Add("ZipCode should not be null or empty");
-            if (string.IsNullOrEmpty(country)) errors.Add("Country should not be null or empty");
+            if (string.IsNullOrEmpty(street)) errors.Add(Error.Create(ErrorMessages.ShouldNotBeNullOrEmpty, nameof(street)));
+            if (string.IsNullOrEmpty(number)) errors.Add(Error.Create(ErrorMessages.ShouldNotBeNullOrEmpty, nameof(number)));
+            if (string.IsNullOrEmpty(city)) errors.Add(Error.Create(ErrorMessages.ShouldNotBeNullOrEmpty, nameof(city)));
+            if (string.IsNullOrEmpty(zipCode)) errors.Add(Error.Create(ErrorMessages.ShouldNotBeNullOrEmpty, nameof(zipCode)));
+            if (string.IsNullOrEmpty(country)) errors.Add(Error.Create(ErrorMessages.ShouldNotBeNullOrEmpty, nameof(country)));
 
-            if (errors.Any()) return Result<string, Address>.Fail(errors);
+            if (errors.Any()) return Result<Address>.Fail(errors);
 
-            return Result<string, Address>.Success(new Address(street, number, city, zipCode, country));
+            return Result<Address>.Success(new Address(street, number, city, zipCode, country));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
