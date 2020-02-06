@@ -46,7 +46,8 @@ namespace ContactManagerPoC.WebAPI
                 {
                     o.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
                 });
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddSqlServer(Configuration["ConnectionStrings:Contacts"]);
             services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(IUnitOfWork).Assembly);
             services.AddDbContext<ContactContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Contacts"]));
             services.AddScoped<IUnitOfWork>(p => p.GetService<ContactContext>());
