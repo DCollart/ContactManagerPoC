@@ -59,6 +59,7 @@ namespace ContactManagerPoC.WebAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ContactManagerAPI", Version = "v1" });
+                c.AddFluentValidationRules();
             });
         }
 
