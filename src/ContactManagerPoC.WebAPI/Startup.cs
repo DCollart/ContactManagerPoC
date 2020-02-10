@@ -4,14 +4,13 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application;
+using ContactManagerPoC.Application.ContactUseCases;
 using ContactManagerPoC.Application.ContactUseCases.AddContact;
-using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
 using ContactManagerPoC.Application.ContactUseCases.GetContactById;
+using ContactManagerPoC.Application.ContactUseCases.GetContacts;
 using ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress;
 using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
-using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Infrastructure;
-using ContactManagerPoC.WebAPI.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -52,8 +51,7 @@ namespace ContactManagerPoC.WebAPI
             services.AddScoped<IUnitOfWork>(p => p.GetService<ContactContext>());
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IGetContactByIdRepository, ContactRepository>();
-            services.AddScoped<IGetActiveContactsRepository, ContactRepository>();
-            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IGetContactsRepository, ContactRepository>();
 
             services.AddSwaggerGen(c =>
             {

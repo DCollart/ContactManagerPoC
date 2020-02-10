@@ -1,7 +1,7 @@
 ﻿
-namespace ContactManagerPoC.Application.ContactUseCases.GetActiveContacts
+namespace ContactManagerPoC.Application.ContactUseCases.GetContacts
 {
-    public class GetActiveContactResponse
+    public class GetContactResponse
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

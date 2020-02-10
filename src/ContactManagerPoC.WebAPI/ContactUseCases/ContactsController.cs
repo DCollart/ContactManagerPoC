@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application.ContactUseCases.AddContact;
-using ContactManagerPoC.Application.ContactUseCases.DeleteContactContact;
-using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
+using ContactManagerPoC.Application.ContactUseCases.DeleteContact;
 using ContactManagerPoC.Application.ContactUseCases.GetContactById;
+using ContactManagerPoC.Application.ContactUseCases.GetContacts;
 using ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress;
 using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
-using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Domain.Core;
+using ContactManagerPoC.WebAPI.ContactUseCases.AddContact;
+using ContactManagerPoC.WebAPI.ContactUseCases.GetContactById;
+using ContactManagerPoC.WebAPI.ContactUseCases.GetContacts;
+using ContactManagerPoC.WebAPI.ContactUseCases.UpdateContactAddress;
+using ContactManagerPoC.WebAPI.ContactUseCases.UpdateContactNames;
 using ContactManagerPoC.WebAPI.Core;
-using ContactManagerPoC.WebAPI.Validators;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GetContactByIdResponse = ContactManagerPoC.WebAPI.ContactUseCases.GetContactById.GetContactByIdResponse;
+using GetContactResponse = ContactManagerPoC.WebAPI.ContactUseCases.GetContacts.GetContactResponse;
 
-namespace ContactManagerPoC.WebAPI.Controllers
+namespace ContactManagerPoC.WebAPI.ContactUseCases
 {
     [Route("[controller]")]
     [ApiController]
@@ -34,29 +35,29 @@ namespace ContactManagerPoC.WebAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(GetActiveContactResponse[]), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(GetContactResponse[]), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllContacts()
         {
-            return Ok(await _mediator.Send(new GetActiveContactsRequest()));
+            var response = await _mediator.Send(new GetContactsQuery());
+            return Ok(response.ToWebResponse());
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(GetContactByIdResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetContactById(int id)
         {
-            var response = await _mediator.Send(new GetContactByIdRequest() { Id = id });
+            var response = await _mediator.Send(new GetContactByIdQuery() { Id = id });
             if (response == null) 
             {
                 return NotFound();
             }
-            return Ok(response);
+            return Ok(response.ToWebResponse());
         }
 
         [HttpPut("{id}/names")]
         public async Task<IActionResult> UpdateContactNames(int id, UpdateContactNamesRequest updateContactRequest)
         {
-            updateContactRequest.Id = id;
-            var result = await _mediator.Send(updateContactRequest);
+            var result = await _mediator.Send(updateContactRequest.MapToCommand(id));
 
             var potentialBadResult = GeneratePotentialBadResult(result);
 
@@ -66,8 +67,7 @@ namespace ContactManagerPoC.WebAPI.Controllers
         [HttpPut("{id}/address")]
         public async Task<IActionResult> ChangeContactAddress(int id, UpdateContactAddressRequest updateContactAddressRequest)
         {
-            updateContactAddressRequest.Id = id;
-            var result = await _mediator.Send(updateContactAddressRequest);
+            var result = await _mediator.Send(updateContactAddressRequest.MapToCommand(id));
 
             var potentialBadResult = GeneratePotentialBadResult(result);
 
@@ -77,7 +77,7 @@ namespace ContactManagerPoC.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddContact(AddContactRequest addContactRequest)
         {
-            var result = await _mediator.Send(addContactRequest);
+            var result = await _mediator.Send(addContactRequest.MapToCommand());
 
             var potentialBadResult = GeneratePotentialBadResult(result);
 
@@ -88,7 +88,7 @@ namespace ContactManagerPoC.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteContact(int id)
         {
-            var result = await _mediator.Send(new DeleteContactRequest() { Id = id });
+            var result = await _mediator.Send(new DeleteContactCommand() { Id = id });
 
             var potentialBadResult = GeneratePotentialBadResult(result);
 

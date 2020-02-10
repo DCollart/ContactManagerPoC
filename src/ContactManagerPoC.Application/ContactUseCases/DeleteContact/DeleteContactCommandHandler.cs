@@ -4,19 +4,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ContactManagerPoC.Application.ContactUseCases.DeleteContactContact;
-using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Domain.Contact;
 using MediatR;
 
 namespace ContactManagerPoC.Application.ContactUseCases.DeleteContact
 {
-    public class DeleteContactRequestHandler : IRequestHandler<DeleteContactRequest, Result>
+    public class DeleteContactCommandHandler : IRequestHandler<DeleteContactCommand, Result>
     {
         private readonly IContactRepository _contactRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteContactRequestHandler(IContactRepository contactRepository, IUnitOfWork unitOfWork)
+        public DeleteContactCommandHandler(IContactRepository contactRepository, IUnitOfWork unitOfWork)
         {
             Contract.Require(() => contactRepository != null);
             Contract.Require(() => unitOfWork != null);
@@ -25,7 +23,7 @@ namespace ContactManagerPoC.Application.ContactUseCases.DeleteContact
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(DeleteContactRequest request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeleteContactCommand request, CancellationToken cancellationToken)
         {
             var contact = await _contactRepository.GetContactByIdAsync(request.Id);
 

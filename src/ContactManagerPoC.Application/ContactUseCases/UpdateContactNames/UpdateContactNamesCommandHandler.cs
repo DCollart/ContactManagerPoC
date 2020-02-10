@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using ContactManagerPoC.Application.ContactUsesCases;
 using ContactManagerPoC.Domain;
 using ContactManagerPoC.Domain.Core;
 using MediatR;
 
-namespace ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress
+namespace ContactManagerPoC.Application.ContactUseCases.UpdateContactNames
 {
-    public class UpdateContactAddressRequestHandler : IRequestHandler<UpdateContactAddressRequest, Result>
+    public class UpdateContactNamesCommandHandler : IRequestHandler<UpdateContactNamesCommand, Result>
     {
         private readonly IContactRepository _contactRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateContactAddressRequestHandler(IContactRepository contactRepository, IUnitOfWork unitOfWork)
+        public UpdateContactNamesCommandHandler(IContactRepository contactRepository, IUnitOfWork unitOfWork)
         {
             Contract.Require(() => contactRepository != null);
             Contract.Require(() => unitOfWork != null);
@@ -22,7 +21,7 @@ namespace ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(UpdateContactAddressRequest request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateContactNamesCommand request, CancellationToken cancellationToken)
         {
             var contact = await _contactRepository.GetContactByIdAsync(request.Id);
             if (contact == null)
@@ -30,17 +29,19 @@ namespace ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress
                 return Result.Fail(Error.Create(ErrorMessages.AggregateNotFound, errorType: ErrorType.AggregateNotFound));
             }
 
-            var addressResult = Address.Create(request.Street, request.Number, request.City, request.ZipCode, request.Country);
+            var firstNameResult = Name.Create(request.FirstName);
+            var lastNameResult = Name.Create(request.LastName);
 
-            if (addressResult.IsFailure)
+            if (firstNameResult.IsFailure || lastNameResult.IsFailure)
             {
                 var errors = new List<Error>();
-                errors.AddRange(addressResult.Errors);
+                errors.AddRange(firstNameResult.Errors);
+                errors.AddRange(lastNameResult.Errors);
 
                 return Result.Fail(errors);
             }
 
-            contact.ChangeAddress(addressResult.Item);
+            contact.UpdateNames(firstNameResult.Item, lastNameResult.Item);
             await _unitOfWork.SaveChangesAsync();
 
             return Result.Success();

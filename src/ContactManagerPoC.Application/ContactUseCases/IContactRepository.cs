@@ -1,7 +1,7 @@
 ﻿using ContactManagerPoC.Domain.Contact;
 using System.Threading.Tasks;
 
-namespace ContactManagerPoC.Application.ContactUsesCases
+namespace ContactManagerPoC.Application.ContactUseCases
 {
     public interface IContactRepository
     {

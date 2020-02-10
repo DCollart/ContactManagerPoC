@@ -1,11 +1,6 @@
-﻿using ContactManagerPoC.Application.ContactUseCases.AddContact;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
-namespace ContactManagerPoC.WebAPI.Validators
+namespace ContactManagerPoC.WebAPI.ContactUseCases.AddContact
 {
     public class AddContactRequestValidator : AbstractValidator<AddContactRequest>
     {

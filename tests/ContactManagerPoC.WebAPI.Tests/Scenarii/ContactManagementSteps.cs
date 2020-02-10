@@ -34,7 +34,7 @@ namespace ContactManagerPoC.WebAPI.Tests.Scenarii
         [When(@"I change that name for (.*) (.*)")]
         public void WhenIChangeItFor(string firstName, string lastName)
         {
-            var request = new UpdateContactNamesRequest()
+            var request = new UpdateContactNamesCommand()
             {
                 FirstName = firstName,
                 LastName = lastName
@@ -72,7 +72,7 @@ namespace ContactManagerPoC.WebAPI.Tests.Scenarii
         public void WhenIChangeItFor(string number, string street,
             string city, string zipCode, string country)
         {
-            var request = new UpdateContactAddressRequest()
+            var request = new UpdateContactAddressCommand()
             {
                 Number = number,
                 Street = street,
@@ -133,7 +133,7 @@ namespace ContactManagerPoC.WebAPI.Tests.Scenarii
 
         private void CreateContact(string firstName, string lastName, string number, string street, string city, string zipCode, string country)
         {
-            var request = new AddContactRequest()
+            var request = new AddContactCommand()
             {
                 FirstName = firstName,
                 LastName = lastName,

@@ -1,6 +1,4 @@
-﻿using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
-using ContactManagerPoC.Application.ContactUseCases.GetContactById;
-using ContactManagerPoC.Application.ContactUsesCases;
+﻿using ContactManagerPoC.Application.ContactUseCases.GetContactById;
 using ContactManagerPoC.Domain.Contact;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,10 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContactManagerPoC.Application.ContactUseCases;
+using ContactManagerPoC.Application.ContactUseCases.GetContacts;
 
 namespace ContactManagerPoC.Infrastructure
 {
-    public class ContactRepository : IContactRepository, IGetActiveContactsRepository, IGetContactByIdRepository
+    public class ContactRepository : IContactRepository, IGetContactsRepository, IGetContactByIdRepository
     {
         private readonly ContactContext _context;
 
@@ -30,9 +30,9 @@ namespace ContactManagerPoC.Infrastructure
             return await _context.Contacts.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        async Task<GetActiveContactResponse[]> IGetActiveContactsRepository.GetAllActiveContactsAsync()
+        async Task<GetContactResponse[]> IGetContactsRepository.GetAllActiveContactsAsync()
         {
-            return await _context.Contacts.Where(c => !c.IsDeleted).Select(c => new GetActiveContactResponse()
+            return await _context.Contacts.Where(c => !c.IsDeleted).Select(c => new GetContactResponse()
             {
                 Id = c.Id,
                 FirstName = c.FirstName.Value,

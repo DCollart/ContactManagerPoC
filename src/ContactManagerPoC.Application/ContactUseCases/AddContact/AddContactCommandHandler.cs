@@ -1,5 +1,4 @@
-﻿using ContactManagerPoC.Application.ContactUsesCases;
-using ContactManagerPoC.Domain.Contact;
+﻿using ContactManagerPoC.Domain.Contact;
 using ContactManagerPoC.Domain.Core;
 using MediatR;
 using System;
@@ -11,12 +10,12 @@ using ContactManagerPoC.Domain;
 
 namespace ContactManagerPoC.Application.ContactUseCases.AddContact
 {
-    public class AddContactRequestHandler : IRequestHandler<AddContactRequest, Result<int>>
+    public class AddContactCommandHandler : IRequestHandler<AddContactCommand, Result<int>>
     {
         private readonly IContactRepository _contactRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddContactRequestHandler(IContactRepository contactRepository, IUnitOfWork unitOfWork)
+        public AddContactCommandHandler(IContactRepository contactRepository, IUnitOfWork unitOfWork)
         {
             Contract.Require(() => contactRepository != null);
             Contract.Require(() => unitOfWork != null);
@@ -25,7 +24,7 @@ namespace ContactManagerPoC.Application.ContactUseCases.AddContact
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<int>> Handle(AddContactRequest request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(AddContactCommand request, CancellationToken cancellationToken)
         {
             var firstNameResult = Name.Create(request.FirstName);
             var lastNameResult = Name.Create(request.LastName);

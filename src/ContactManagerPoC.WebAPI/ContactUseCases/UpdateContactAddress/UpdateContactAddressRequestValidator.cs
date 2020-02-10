@@ -1,12 +1,6 @@
-﻿using ContactManagerPoC.Application.ContactUseCases.AddContact;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress;
+﻿using FluentValidation;
 
-namespace ContactManagerPoC.WebAPI.Validators
+namespace ContactManagerPoC.WebAPI.ContactUseCases.UpdateContactAddress
 {
     public class UpdateContactAddressRequestValidator : AbstractValidator<UpdateContactAddressRequest>
     {

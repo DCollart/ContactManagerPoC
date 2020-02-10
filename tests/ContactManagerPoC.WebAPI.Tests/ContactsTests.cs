@@ -1,5 +1,4 @@
 using ContactManagerPoC.Application.ContactUseCases.AddContact;
-using ContactManagerPoC.Application.ContactUseCases.GetActiveContacts;
 using FluentAssertions;
 using System;
 using System.Net;
@@ -34,7 +33,7 @@ namespace ContactManagerPoC.WebAPI.Tests
         public async Task CanCreateContact()
         {
             // Arrange 
-            var content = new StringContent(JsonSerializer.Serialize(new AddContactRequest()
+            var content = new StringContent(JsonSerializer.Serialize(new AddContactCommand()
             {
                 FirstName = Guid.NewGuid().ToString(),
                 LastName = Guid.NewGuid().ToString(),

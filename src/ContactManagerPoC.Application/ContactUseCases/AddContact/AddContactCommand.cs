@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ContactManagerPoC.Application.ContactUseCases.AddContact
 {
-    public class AddContactRequest : IRequest<Result<int>>
+    public class AddContactCommand : IRequest<Result<int>>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
