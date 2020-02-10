@@ -1,0 +1,43 @@
+﻿2020-02-08T23:37:23.8564401+01:00;VSTestExecutionThread;Info;SpecFlow+Runner execution started
+2020-02-08T23:37:23.8570909+01:00;VSTestExecutionThread;Info;SpecFlow+Runner 3.1.48 in Framework netcore31 in x64 mode execution started
+2020-02-08T23:37:23.8571050+01:00;VSTestExecutionThread;Info;TestAdapter Location: C:\Users\Domin\Documents\Workspace\Sandbox\ContactManagerPoC\tests\ContactManagerPoC.WebAPI.Tests\bin\Debug\netcoreapp3.1\TechTalk.SpecRun.VisualStudio.TestAdapter.dll
+2020-02-08T23:37:23.9691465+01:00;VSTestExecutionThread;Info;SpecRun: running tests in C:\Users\Domin\Documents\Workspace\Sandbox\ContactManagerPoC\tests\ContactManagerPoC.WebAPI.Tests\bin\Debug\netcoreapp3.1\ContactManagerPoC.WebAPI.Tests.dll
+2020-02-08T23:37:23.9704278+01:00;VSTestExecutionThread;Info;Output folder configured to "C:\Users\Domin\Documents\Workspace\Sandbox\ContactManagerPoC\TestResults" (default)
+2020-02-08T23:37:23.9708112+01:00;VSTestExecutionThread;Info;Profile: 
+2020-02-08T23:37:24.1014755+01:00;VSTestExecutionThread;Info;Log file path: C:\Users\Domin\Documents\Workspace\Sandbox\ContactManagerPoC\TestResults\Unnamed project__2020-02-08T233723.log
+2020-02-08T23:37:24.1205541+01:00;VSTestExecutionThread;Info;SpecFlow+Runner Evaluation Mode: Please purchase at http://www.specflow.org/plus to remove test execution delay.
+2020-02-08T23:37:24.1426016+01:00;Thread#12;Info;Checking license
+2020-02-08T23:37:24.2005142+01:00;Thread#12;Info;Evaluation mode: test execution starts in 13 seconds... (this delay is removed in the registered version)
+2020-02-08T23:37:37.2012448+01:00;Thread#12;Info;Evaluation delay finished.
+2020-02-08T23:37:37.2077201+01:00;Thread#12;Info;License check completed
+2020-02-08T23:37:37.2082228+01:00;Thread#12;Info;starting test run
+2020-02-08T23:37:37.2144184+01:00;Thread#12;Info;Discovering target: Default
+2020-02-08T23:37:37.2146250+01:00;Thread#12;Info;Discovering tests from assembly: C:\Users\Domin\Documents\Workspace\Sandbox\ContactManagerPoC\tests\ContactManagerPoC.WebAPI.Tests\bin\Debug\netcoreapp3.1\ContactManagerPoC.WebAPI.Tests.dll
+2020-02-08T23:37:37.2987153+01:00;Thread#12;Info;Discovered tests from assembly: C:\Users\Domin\Documents\Workspace\Sandbox\ContactManagerPoC\tests\ContactManagerPoC.WebAPI.Tests\bin\Debug\netcoreapp3.1\ContactManagerPoC.WebAPI.Tests.dll
+2020-02-08T23:37:37.3005025+01:00:Test Suite Dump
+2020-02-08T23:37:37.3024371+01:00:#0: Unnamed project/ - 
+2020-02-08T23:37:37.3024957+01:00:End: Test Suite Dump
+2020-02-08T23:37:37.3176886+01:00:Thread#0:Scheduler: get next test for thread 0
+2020-02-08T23:37:37.3193861+01:00:Thread#:Scheduler: at the end of normal test queue
+2020-02-08T23:37:37.3194020+01:00:Thread#0:Scheduler: enumerator for thread is at end
+2020-02-08T23:37:37.3195167+01:00:Thread#0:Scheduler: No more tests for thread
+2020-02-08T23:37:37.3272467+01:00:Thread#-1:Scheduler: get next test for thread -1
+2020-02-08T23:37:37.3272838+01:00:Thread#:Scheduler: at the end of normal test queue
+2020-02-08T23:37:37.3272864+01:00:Thread#-1:Scheduler: enumerator for thread is at end
+2020-02-08T23:37:37.3290931+01:00;Thread#12;Info;test run finished
+2020-02-08T23:37:37.3292905+01:00;Thread#12;Info;publishing test results
+2020-02-08T23:37:37.3295825+01:00;Thread#12;Info;Not publishing results.
+2020-02-08T23:37:37.3297707+01:00;Thread#12;Info;test results published
+2020-02-08T23:37:37.3298903+01:00;Thread#12;Info;generating reports
+2020-02-08T23:37:37.4021876+01:00;Thread#12;Info;Starting external report generation process
+2020-02-08T23:37:40.5940386+01:00;Thread#12;Error;Could not generate test run result reports. An error occurred in the generator.
+2020-02-08T23:37:40.5945928+01:00;Thread#12;Error;External program returned exit code '-2'
+2020-02-08T23:37:40.5947526+01:00;Thread#12;Info;Failed generating reports
+2020-02-08T23:37:40.6009042+01:00:Total: 0
+2020-02-08T23:37:40.6025050+01:00:Succeeded: 0
+2020-02-08T23:37:40.6027671+01:00:Ignored: 0
+2020-02-08T23:37:40.6029929+01:00:Pending: 0
+2020-02-08T23:37:40.6036352+01:00:Skipped: 0
+2020-02-08T23:37:40.6039356+01:00:Failed: 0
+2020-02-08T23:37:40.6087218+01:00;VSTestExecutionThread;Info;Adding attachments to VSTest
+========== End of log file ==========
