@@ -1,0 +1,12 @@
+﻿CREATE PROCEDURE GetContacts ()
+BEGIN
+    SELECT Id, FirstName, LastName FROM Contacts;
+END;
+
+
+CREATE PROCEDURE GetContactById (in id integer)
+BEGIN
+    SELECT Id, FirstName, LastName, Number, Street, City, ZipCode, Country FROM Contacts where Id = id;
+END;
+
+
