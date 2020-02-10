@@ -18,7 +18,7 @@ namespace ContactManagerPoC.Application.ContactUseCases.GetContacts
 
         public async Task<GetContactResponse[]> Handle(GetContactsQuery request, CancellationToken cancellationToken)
         {
-            return await _contactRepository.GetAllActiveContactsAsync();
+            return await _contactRepository.GetContactsAsync();
         }
     }
 }

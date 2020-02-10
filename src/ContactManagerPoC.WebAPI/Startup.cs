@@ -1,3 +1,6 @@
+using System;
+using System.Data;
+using System.Data.Common;
 using System.Reflection;
 using ContactManagerPoC.Application;
 using ContactManagerPoC.Application.ContactUseCases;
@@ -13,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MySql.Data.MySqlClient;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace ContactManagerPoC.WebAPI
@@ -29,17 +33,19 @@ namespace ContactManagerPoC.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration["ConnectionStrings:Contacts"];
             services.AddControllers().AddFluentValidation(o =>
                 {
                     o.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
                 });
             services.AddHealthChecks();
             services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(IUnitOfWork).Assembly);
-            services.AddDbContext<ContactContext>(options => options.UseMySql(Configuration["ConnectionStrings:Contacts"]));
+            services.AddDbContext<ContactContext>(options => options.UseMySql(connectionString));
             services.AddScoped<IUnitOfWork>(p => p.GetService<ContactContext>());
-            services.AddScoped<IContactRepository, ContactRepository>();
-            services.AddScoped<IGetContactByIdRepository, ContactRepository>();
-            services.AddScoped<IGetContactsRepository, ContactRepository>();
+            services.AddScoped<IContactRepository, DomainContactRepository>();
+            services.AddScoped<IGetContactByIdRepository, ReadContactRepository>();
+            services.AddScoped<IGetContactsRepository, ReadContactRepository>();
+            services.AddScoped<IDbConnection>((provider) => new MySqlConnection(connectionString));
 
             services.AddSwaggerGen(c =>
             {
