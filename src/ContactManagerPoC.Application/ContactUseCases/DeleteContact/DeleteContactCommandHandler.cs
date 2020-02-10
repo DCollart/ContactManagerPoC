@@ -1,10 +1,6 @@
 ﻿using ContactManagerPoC.Domain.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ContactManagerPoC.Domain.Contact;
 using MediatR;
 
 namespace ContactManagerPoC.Application.ContactUseCases.DeleteContact

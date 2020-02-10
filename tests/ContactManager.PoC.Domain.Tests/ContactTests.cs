@@ -1,8 +1,6 @@
 ﻿using ContactManagerPoC.Domain.Contact;
 using FluentAssertions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using ContactManagerPoC.Domain;
 using Xunit;
 

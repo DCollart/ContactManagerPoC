@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ApplicationLayer = ContactManagerPoC.Application.ContactUseCases.GetContactById;
+﻿using ApplicationLayer = ContactManagerPoC.Application.ContactUseCases.GetContactById;
 
 namespace ContactManagerPoC.WebAPI.ContactUseCases.GetContactById
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ContactManagerPoC.Application.ContactUseCases.GetContactById
+﻿namespace ContactManagerPoC.Application.ContactUseCases.GetContactById
 {
     public class GetContactByIdResponse
     {

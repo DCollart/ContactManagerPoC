@@ -1,10 +1,7 @@
 ﻿using ContactManagerPoC.Application.ContactUseCases.GetContactById;
 using ContactManagerPoC.Domain.Contact;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ContactManagerPoC.Application.ContactUseCases;
 using ContactManagerPoC.Application.ContactUseCases.GetContacts;

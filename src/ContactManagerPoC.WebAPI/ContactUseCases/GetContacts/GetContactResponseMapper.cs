@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using ApplicationLayer = ContactManagerPoC.Application.ContactUseCases.GetContacts;
 
 namespace ContactManagerPoC.WebAPI.ContactUseCases.GetContacts

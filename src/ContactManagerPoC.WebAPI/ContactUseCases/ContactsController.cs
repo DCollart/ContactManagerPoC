@@ -1,12 +1,9 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using ContactManagerPoC.Application.ContactUseCases.AddContact;
 using ContactManagerPoC.Application.ContactUseCases.DeleteContact;
 using ContactManagerPoC.Application.ContactUseCases.GetContactById;
 using ContactManagerPoC.Application.ContactUseCases.GetContacts;
-using ContactManagerPoC.Application.ContactUseCases.UpdateContactAddress;
-using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
 using ContactManagerPoC.Domain.Core;
 using ContactManagerPoC.WebAPI.ContactUseCases.AddContact;
 using ContactManagerPoC.WebAPI.ContactUseCases.GetContactById;

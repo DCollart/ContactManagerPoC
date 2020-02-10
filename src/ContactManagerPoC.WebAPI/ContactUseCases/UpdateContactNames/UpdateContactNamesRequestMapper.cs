@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ContactManagerPoC.Application.ContactUseCases.AddContact;
-using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
-using ContactManagerPoC.WebAPI.ContactUseCases.AddContact;
+﻿using ContactManagerPoC.Application.ContactUseCases.UpdateContactNames;
 
 namespace ContactManagerPoC.WebAPI.ContactUseCases.UpdateContactNames
 {
