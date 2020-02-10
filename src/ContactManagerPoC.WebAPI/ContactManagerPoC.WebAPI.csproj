@@ -22,9 +22,5 @@
     <ProjectReference Include="..\ContactManagerPoC.Infrastructure\ContactManagerPoC.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 
 </Project>

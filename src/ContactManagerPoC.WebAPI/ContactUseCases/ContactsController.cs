@@ -36,10 +36,10 @@ namespace ContactManagerPoC.WebAPI.ContactUseCases
         public async Task<IActionResult> GetAllContacts()
         {
             var response = await _mediator.Send(new GetContactsQuery());
-            return Ok(response.ToWebResponse());
+            return Ok(response.ToWebResponse(id => Url.Action(nameof(GetContactById), new { Id = id })));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = nameof(GetContactById))]
         [ProducesResponseType(typeof(GetContactByIdResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetContactById(int id)
         {
@@ -78,7 +78,7 @@ namespace ContactManagerPoC.WebAPI.ContactUseCases
 
             var potentialBadResult = GeneratePotentialBadResult(result);
 
-            return potentialBadResult ?? Created("temp", result.Item);
+            return potentialBadResult ?? Created(Url.Action(nameof(GetContactById), new { id = result.Item}), result.Item);
         }
 
 
