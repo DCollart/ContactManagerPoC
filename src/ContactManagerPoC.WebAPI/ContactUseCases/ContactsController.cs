@@ -18,7 +18,7 @@ using GetContactResponse = ContactManagerPoC.WebAPI.ContactUseCases.GetContacts.
 
 namespace ContactManagerPoC.WebAPI.ContactUseCases
 {
-    [Route("[controller]")]
+    [Route("contacts")]
     [ApiController]
     public class ContactsController : ControllerBase
     {

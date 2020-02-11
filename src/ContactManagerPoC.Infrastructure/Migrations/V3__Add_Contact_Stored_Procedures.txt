@@ -3,10 +3,8 @@ BEGIN
     SELECT Id, FirstName, LastName FROM Contacts;
 END;
 
-
-CREATE PROCEDURE GetContactById (in id integer)
+CREATE PROCEDURE GetContactById (id integer)
 BEGIN
-    SELECT Id, FirstName, LastName, Number, Street, City, ZipCode, Country FROM Contacts where Id = id;
+    SELECT c.Id, c.FirstName, c.LastName, c.Number, c.Street, c.City, c.ZipCode, c.Country, c.IsDeleted FROM Contacts c where c.Id = id;
 END;
-
 
